@@ -23,4 +23,4 @@ USER app
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
     CMD curl -fsS http://0.0.0.0:8080/healthz/ || exit 1
 
-CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8080"]
+CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8080", "--forwarded-allow-ips=*"]
