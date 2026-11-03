@@ -1,4 +1,4 @@
-FROM node:22-alpine AS dev
+FROM node:26-alpine AS dev
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm install
@@ -8,7 +8,7 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
     CMD wget -q -O /dev/null http://0.0.0.0:8080/ || exit 1
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
 
-FROM node:22-alpine AS build
+FROM node:26-alpine AS build
 ARG VITE_API_BASE_URL
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 WORKDIR /app
