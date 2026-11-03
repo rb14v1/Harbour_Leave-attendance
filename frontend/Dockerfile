@@ -4,6 +4,8 @@ COPY package.json package-lock.json* ./
 RUN npm install
 COPY . .
 EXPOSE 5173
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+    CMD wget -q -O /dev/null http://127.0.0.1:5173/ || exit 1
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
 
 FROM node:22-alpine AS build
@@ -16,3 +18,5 @@ RUN npm run build
 FROM nginx:alpine AS prod
 COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD wget -q -O /dev/null http://127.0.0.1/ || exit 1
