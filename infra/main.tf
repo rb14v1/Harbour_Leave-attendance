@@ -22,9 +22,9 @@ provider "azurerm" {
 
 resource "azurerm_postgresql_flexible_server" "postgresql" {
   tags = var.common_tags
-  name                   = "psql-test-env"
-  resource_group_name    = "test-env-"
-  location               = "uksouth"
+  name                   = "psql-leave-abcd"
+  resource_group_name    = "leave-abcd"
+  location               = "UK South "
   version                = "16"
   sku_name               = "B_Standard_B1ms"
   storage_mb             = 32768
@@ -58,7 +58,7 @@ data "azurerm_private_dns_zone" "postgresql_dns_zone" {
 
 resource "azurerm_private_dns_zone_virtual_network_link" "postgresql_dns_zone_link" {
   tags = var.common_tags
-  name                  = "link-test-env"
+  name                  = "link-leave-abcd"
   resource_group_name   = var.hub_resource_group
   private_dns_zone_name = data.azurerm_private_dns_zone.postgresql_dns_zone.name
   virtual_network_id    = var.vnet_id
@@ -66,9 +66,9 @@ resource "azurerm_private_dns_zone_virtual_network_link" "postgresql_dns_zone_li
 
 resource "azurerm_private_endpoint" "postgresql_pe" {
   tags = var.common_tags
-  name                = "pe-psql-test-env"
-  resource_group_name = "test-env-"
-  location            = "uksouth"
+  name                = "pe-psql-leave-abcd"
+  resource_group_name = "leave-abcd"
+  location            = "UK South "
   subnet_id           = var.subnet_id
 
   private_service_connection {
